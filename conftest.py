@@ -6,23 +6,16 @@ import requests
 from data import *
 from selenium import webdriver
 
-from selenium.webdriver.support.events import EventFiringWebDriver
-from listener import MyListener
-
-
-
-@pytest.fixture(params=["chrome", "firefox"])
+@pytest.fixture(params=["firefox", "chrome"])
 def driver(request):
     if request.param == "chrome":
         opts = webdriver.ChromeOptions()
         opts.add_argument("--window-size=1920,1080")     # фиксированный размер окна
         browser = webdriver.Chrome(options=opts)
-        browser = EventFiringWebDriver(browser, MyListener())
     elif request.param == "firefox":
         opts = webdriver.FirefoxOptions()
         opts.add_argument("--window-size=1920,1080")
         browser = webdriver.Firefox(options=opts)
-        browser = EventFiringWebDriver(browser, MyListener())
     browser.maximize_window()
     yield browser
     browser.quit()

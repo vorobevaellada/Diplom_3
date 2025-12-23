@@ -3,7 +3,6 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import allure
 from seletools.actions import drag_and_drop
-
 class BasePage:
 
     @allure.step("Инициализация браузера")
@@ -19,9 +18,17 @@ class BasePage:
     def find_element(self, locator):
         return self.driver_wait.until(EC.presence_of_element_located(locator))
 
+    @allure.step("Поиск нужных элементов на странице")
+    def find_elements(self, locator):
+        return self.driver.find_elements(locator)
+
     @allure.step("Нажатие на найденный элемент")
     def click_element(self, locator):
-        self.find_element(locator).click()
+        element = self.find_element(locator)
+        try:
+            self.wait_elem_click(locator).click()
+        except:
+            self.driver.execute_script("arguments[0].click();", element)
 
     @allure.step("Ввод текста в поле ввода")
     def text_input(self, locator, text):
@@ -51,3 +58,16 @@ class BasePage:
     @allure.step("Прокрутка страницы до указанного элемента")
     def scroll_to_bottom(self, element):
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
+
+    @allure.step("Получение существующего url")
+    def get_current_url(self):
+        self.wait_dom_stable()
+        return self.driver.current_url
+
+    @allure.step("Ожидание стабилизации DOM")
+    def wait_dom_stable(self):
+        self.driver_wait.until(lambda d: d.execute_script("return document.readyState") == "complete")
+    
+    @allure.step("Ожидание изменения url")
+    def wait_change_url(self, url):
+        self.driver_wait.until(EC.url_to_be(url))

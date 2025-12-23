@@ -2,7 +2,6 @@ import allure
 from data import Urls
 from locators import MainPageLocators
 from pages.base_page import BasePage
-import time
 
 class MainPage(BasePage):
 
@@ -16,7 +15,7 @@ class MainPage(BasePage):
 
     @allure.step("Переходим в раздел Лента заказов")
     def click_order_feed_button(self):
-        time.sleep(3)
+        self.wait_elem_visible(MainPageLocators.ORDER_FEED_BUTTON)
         self.click_element(MainPageLocators.ORDER_FEED_BUTTON)
 
     @allure.step("Выбираем ингредиент Флюоресцентная булка")
@@ -41,10 +40,13 @@ class MainPage(BasePage):
     def click_order_button(self):
         self.click_element(MainPageLocators.ORDER_BUTTON)
 
+    @allure.step("Получение элемента откуда будет выполнен переброс булки")
     def get_source_element(self):
         self.wait_elem_click(MainPageLocators.FLUOR_BUN)
-        return self.driver.find_element(*MainPageLocators.FLUOR_BUN)
+        return self.find_element(MainPageLocators.FLUOR_BUN)
 
+    @allure.step("Получение элемента куда будет выполнен переброс булки")
     def get_target_element(self):
         self.wait_elem_visible(MainPageLocators.INGREDIENT_PLACE)
-        return self.driver.find_element(*MainPageLocators.INGREDIENT_PLACE)
+        return self.find_element(MainPageLocators.INGREDIENT_PLACE)
+    

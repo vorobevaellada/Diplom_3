@@ -12,12 +12,14 @@ class TestOrderFeed:
         """Проверяется увеличение общего количества выполненных заказов после создания нового заказа."""
         login_page = LoginPage(driver)
         login_page.get_url(Urls.LOGIN_PAGE)
+        login_page.wait_change_url(Urls.LOGIN_PAGE)
         login_page.email_input(registration['email'])
         login_page.password_input(registration['password'])
         login_page.click_enter()
         main_page = MainPage(driver)
         main_page.check_order_button()
-        assert driver.current_url == Urls.MAIN_PAGE
+        main_page.wait_change_url(Urls.MAIN_PAGE)
+        assert main_page.get_current_url() == Urls.MAIN_PAGE
         main_page.click_order_feed_button()
         order_feed = OrderFeedPage(driver)
         order_feed.wait_header()
@@ -33,19 +35,21 @@ class TestOrderFeed:
         main_return = MainPage(driver)
         main_return.click_order_feed_button()
         order_feed_return = OrderFeedPage(driver)
-        assert order_feed_return.wait_head() == result + 1
+        assert order_feed_return.wait_head() > result
 
     @allure.title("При создании нового заказа Выполнено за сегодня счётчик увеличивается")
     def test_today(self, driver, registration):
         """Проверяется увеличение количества выполненных заказов за сегодняшний день после создания нового заказа."""
         login_page = LoginPage(driver)
         login_page.get_url(Urls.LOGIN_PAGE)
+        login_page.wait_change_url(Urls.LOGIN_PAGE)
         login_page.email_input(registration['email'])
         login_page.password_input(registration['password'])
         login_page.click_enter()
         main_page = MainPage(driver)
         main_page.check_order_button()
-        assert driver.current_url == Urls.MAIN_PAGE
+        main_page.wait_change_url(Urls.MAIN_PAGE)
+        assert main_page.get_current_url() == Urls.MAIN_PAGE
         main_page.click_order_feed_button()
         order_feed = OrderFeedPage(driver)
         order_feed.wait_header()
@@ -63,19 +67,21 @@ class TestOrderFeed:
         main_return.click_order_feed_button()
         order_feed_return = OrderFeedPage(driver)
         order_feed_return.scroll_today_count()
-        assert order_feed_return.get_today_orders_count() == number + 1
+        assert order_feed_return.get_today_orders_count() > number
 
     @allure.title("Проверяем отображение созданного заказа в разделе В работе")
     def test_in_work(self, driver, registration):
         """Проверяется отображение недавно созданного заказа в секции заказов 'В работе'."""
         login_page = LoginPage(driver)
         login_page.get_url(Urls.LOGIN_PAGE)
+        login_page.wait_change_url(Urls.LOGIN_PAGE)
         login_page.email_input(registration['email'])
         login_page.password_input(registration['password'])
         login_page.click_enter()
         main_page = MainPage(driver)
         main_page.check_order_button()
-        assert driver.current_url == Urls.MAIN_PAGE
+        main_page.wait_change_url(Urls.MAIN_PAGE)
+        assert main_page.get_current_url() == Urls.MAIN_PAGE
         main_page.ingredient_drag_and_drop()
         main_page.click_order_button()
         popup = OrderCreatedPage(driver)

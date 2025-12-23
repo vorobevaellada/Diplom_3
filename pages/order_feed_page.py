@@ -7,6 +7,7 @@ class OrderFeedPage(BasePage):
 
     @allure.step("Клик на Конструктор")
     def click_constructor_button(self):
+        self.wait_elem_visible(OrderFeedLocators.CONSTRUCTOR_BUTTON)
         self.click_element(OrderFeedLocators.CONSTRUCTOR_BUTTON)
 
     @allure.step("Изменение url на Ленту заказов")

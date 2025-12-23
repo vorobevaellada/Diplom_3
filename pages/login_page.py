@@ -6,15 +6,15 @@ class LoginPage(BasePage):
 
     @allure.step("Заполняем поле Email")
     def email_input(self, text):
-        self.wait_elem_click(LoginPageLocators.EMAIL_NOT_ACTIVE)
-        self.click_element(LoginPageLocators.EMAIL_NOT_ACTIVE)
-        self.text_input(LoginPageLocators.EMAIL_ACTIVE, text)
+        self.wait_elem_click(LoginPageLocators.EMAIL)
+        self.click_element(LoginPageLocators.EMAIL)
+        self.text_input(LoginPageLocators.EMAIL, text)
 
     @allure.step("Заполняем поле Пароля")
     def password_input(self, text):
-        self.wait_elem_click(LoginPageLocators.PASSWORD_FIELD_NOT_ACTIVE)
-        self.click_element(LoginPageLocators.PASSWORD_FIELD_NOT_ACTIVE)
-        self.text_input(LoginPageLocators.PASSWORD_FIELD_ACTIVE, text)
+        self.wait_elem_click(LoginPageLocators.PASSWORD)
+        self.click_element(LoginPageLocators.PASSWORD)
+        self.text_input(LoginPageLocators.PASSWORD, text)
 
     @allure.step("Нажимаем на кнопку Вход")
     def click_enter(self):
