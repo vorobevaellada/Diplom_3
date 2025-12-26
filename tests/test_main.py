@@ -41,7 +41,7 @@ class TestMainFunctions:
         assert "ingredient" in popup.get_current_url()
         popup.close_popup()
         popup.wait_until_popup_invisible()
-        assert not popup.find_element(IngredientPopupLocators.INGREDIENT_HEADER).is_displayed()
+        assert not popup.popup_ingredient_is_active()
 
     @allure.title("Добавление ингредиента в заказ и изменение у него счетчика")
     def test_add_ingredient(self, driver):
@@ -52,4 +52,4 @@ class TestMainFunctions:
         main.wait_change_url(Urls.MAIN_PAGE)
         main.ingredient_drag_and_drop()
         main.wait_counter_visible()
-        assert main.find_element(MainPageLocators.FLUOR_BUN_COUNTER).is_displayed()
+        assert main.fluor_bun_counter_is_active()

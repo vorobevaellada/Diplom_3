@@ -40,6 +40,10 @@ class MainPage(BasePage):
     def click_order_button(self):
         self.click_element(MainPageLocators.ORDER_BUTTON)
 
+    @allure.step("Проверка видимости счетчика")
+    def fluor_bun_counter_is_active(self):
+        return self.find_element(MainPageLocators.FLUOR_BUN_COUNTER).is_displayed()
+
     @allure.step("Получение элемента откуда будет выполнен переброс булки")
     def get_source_element(self):
         self.wait_elem_click(MainPageLocators.FLUOR_BUN)

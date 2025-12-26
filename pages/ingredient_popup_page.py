@@ -15,3 +15,7 @@ class IngredientPopup(BasePage):
     @allure.step("Подтверждаем закрытие окна (до момента исчезновения)")
     def wait_until_popup_invisible(self):
         self.wait_elem_invisible(IngredientPopupLocators.INGREDIENT_HEADER)
+
+    @allure.step("Проверка видимости деталей ингредиента")
+    def popup_ingredient_is_active(self):
+        return self.find_element(IngredientPopupLocators.INGREDIENT_HEADER).is_displayed()
